@@ -67,13 +67,10 @@ on property:sys.boot_completed=1
     write /sys/class/devfreq/soc:qcom,l3-cdsp/governor userspace
     chown system system /sys/class/devfreq/soc:qcom,l3-cdsp/userspace/set_freq
 
-# Disable console_suspend to get better logging for kernel crashes
 on boot
-    write /sys/module/printk/parameters/console_suspend N
-
     #Enable suspend to idle mode to reduce latency during suspend/resume
     write /sys/power/mem_sleep "s2idle"
 
-# If UART is on, enable console_suspend on boot_complete to save power
-on property:sys.boot_completed=1 && property:init.svc.console=running
-    write /sys/module/printk/parameters/console_suspend Y
+# On debuggable builds, disable console_suspend to get better logging for kernel crashes
+on property:sys.boot_completed=1 && property:ro.debuggable=1
+    write /sys/module/printk/parameters/console_suspend N
