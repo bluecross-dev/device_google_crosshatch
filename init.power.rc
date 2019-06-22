@@ -38,7 +38,8 @@ on property:sys.boot_completed=1
     write /sys/class/devfreq/soc:qcom,llccbw/bw_hwmon/up_scale 250
     write /sys/class/devfreq/soc:qcom,llccbw/bw_hwmon/idle_mbps 1600
 
-    write /sys/class/devfreq/soc:qcom,mincpubw/governor "cpufreq"
+    write /sys/class/devfreq/soc:qcom,mincpubw/governor "compute"
+    write /sys/class/devfreq/soc:qcom,mincpubw/polling_interval 10
 
     # Enable memlat governor
     write /sys/class/devfreq/soc:qcom,memlat-cpu0/governor "mem_latency"
